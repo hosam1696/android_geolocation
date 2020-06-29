@@ -43,6 +43,7 @@ public class DetectLatLng extends Fragment implements OnMapReadyCallback, Locati
     private LocationManager locationManager;
     private LocationSource.OnLocationChangedListener locationChangedListener;
     private double lat = 0,lng = 0;
+    private MainActivity mapsActivity;
 
     public static DetectLatLng newInstance() {
         return (new DetectLatLng());
@@ -51,6 +52,9 @@ public class DetectLatLng extends Fragment implements OnMapReadyCallback, Locati
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.currentlocation, container, false);
+        mapsActivity = (MainActivity) getActivity();
+
+        ((MainActivity) getActivity()).setActionBarTitle("Current location");
         btn = view.findViewById(R.id.button);
         txt = view.findViewById(R.id.txt);
 
