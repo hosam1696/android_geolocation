@@ -13,55 +13,46 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.navjava.appartment.Places;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class SearchNearBy extends Fragment implements OnMapReadyCallback,LocationListener, LocationSource {
+public class DetectLatLng extends Fragment implements OnMapReadyCallback, LocationListener, LocationSource {
+    Button btn;
+    TextView txt;
+
     private static final int PERMISSIONS_REQUEST_ENABLE_GPS = 9003;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 9002;
     private static GoogleMap mMap;
     private LocationManager locationManager;
     private LocationSource.OnLocationChangedListener locationChangedListener;
-    private ImageView start;
     private double lat = 0,lng = 0;
-    private  static final int RADIUS = 10000;
-    private static final String KEY ="AIzaSyDuyIv_d9i89QWqCjGEEuvPdO1X49NPNN0";
-    private MainActivity mapsActivity;
-    private Button zoomin, zoomout;
 
-    public static SearchNearBy newInstance() {
-        return (new SearchNearBy());
+    public static DetectLatLng newInstance() {
+        return (new DetectLatLng());
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mapsActivity = (MainActivity) getActivity();
-        ((MainActivity) getActivity()).setActionBarTitle("Search near by");
-        View view = inflater.inflate(R.layout.searchnearby, container, false);
-        zoomin = view.findViewById(R.id.zoomin);
-        zoomout = view.findViewById(R.id.zoomout);
-        start = view.findViewById(R.id.btnFind);
+        View view = inflater.inflate(R.layout.currentlocation, container, false);
+        btn = view.findViewById(R.id.button);
+        txt = view.findViewById(R.id.txt);
 
         /**
          * initialiser map
@@ -70,55 +61,16 @@ public class SearchNearBy extends Fragment implements OnMapReadyCallback,Locatio
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        zoomin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMap.animateCamera(CameraUpdateFactory.zoomIn());
-
-            }
-        });
-        zoomout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMap.animateCamera(CameraUpdateFactory.zoomOut());
-
-            }
-        });
-
-        start.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if ((lat == 0) || (lng == 0)) {
                     Toast.makeText(getActivity(), "wait for gps", Toast.LENGTH_SHORT).show();
                 } else {
-                    /**
-                     * google nous propose une methode qui permet de faire la recherche
-                     * avec un url en proposant les parametre indiquer plus bas
-                     */
-                    String url = getUrl(lat,lng);
-                    Object dataTransfer [] = new Object[2];
-                    dataTransfer[0] = mMap;
-                    dataTransfer[1] = url;
-                    /**
-                     * la classe places contient une methode qui travail en background
-                     * qu'elle permet de recherche les parkings et le retourner en String
-                     */
-                    Places places = new Places();
-                    places.setMainActivity(SearchNearBy.this);
-                    places.execute(dataTransfer);
-                    /**
-                     * message d'indication
-                     * */
-                    Toast.makeText(getActivity(), "Showing parking ...",Toast.LENGTH_LONG).show();
+                    txt.setText(lat+","+lng);
                 }
             }
         });
-
-
-
-
-
 
         return view;
     }
@@ -244,44 +196,7 @@ public class SearchNearBy extends Fragment implements OnMapReadyCallback,Locatio
         if(satellitOption.equals("true")){
             mMap.setMapType(mMap.MAP_TYPE_SATELLITE);
         }
-
-
-
     }
-
-
-
-    /**
-     * useful method
-     */
-    private String getUrl(double lat, double lng) {
-        /**
-         * on cherche les appartements donc on precise dans l'attribut type appartement,
-         * la key c'est la key de google map places (elle est utilisable une fois par jours
-         * et donc il faut la changer apres chaque test et pour cela nous avons creer une liste d'api
-         * qui sont les suivantes:
-         * AIzaSyDuyIv_d9i89QWqCjGEEuvPdO1X49NPNN0
-         * AIzaSyCi0gcm2nyMaf_kexNjGV_QUJvoRWoMyDE
-         * AIzaSyDxYMUeCtMG-n23idvYNTbsDrgXLKGqhLQ
-         * AIzaSyBf8VIGKetwwI6qbBkkwmevBVBSZnws2yc
-         * AIzaSyCduOQmMTrZYWuMAp2g1mxjf1HrJqMaQsE
-         * AIzaSyAUFDk6a14L0MyQCQwD6xQr6QyY37ScNjc
-         *
-         * le radius a 3000m = 3km
-         * lat et lng initialiser a 0
-         */
-        StringBuilder url = new StringBuilder();
-        url.append("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        url.append("location=" + lat + "," + lng  + "&radius=" + RADIUS);
-        url.append("&type=university&key=" + KEY);
-        return url.toString();
-    }
-
-
-
-
-
-
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -322,6 +237,8 @@ public class SearchNearBy extends Fragment implements OnMapReadyCallback,Locatio
 
                     } else {
                         isAnswered = true;
+
+
                     }
                 }
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10F, this);
@@ -334,10 +251,5 @@ public class SearchNearBy extends Fragment implements OnMapReadyCallback,Locatio
         }
     }
 
-    public static GoogleMap getmMap() {
-        return mMap;
-    }
-    public GoogleMap  getmMapVoid(){
-        return mMap;
-    }
+
 }

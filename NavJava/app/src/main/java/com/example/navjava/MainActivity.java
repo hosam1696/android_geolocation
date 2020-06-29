@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
      * Fragment
      */
     private Fragment SearchByName_Fragment,
-                    SearchNearBy_Fragment;
+                    SearchNearBy_Fragment,CurrentLocation_Fragemnt;
 
 
 
@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
      */
 
     public static final int FRAGMENT_SearchByName = 1,
-                            Fragment_SearchNearBY = 2;
+                            Fragment_SearchNearBY = 2,
+                            Fragement_CurrentLocation = 3;
 
 
 
@@ -118,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 break;
             case R.id.nav_searchNearBy:
                 this.showFragment(Fragment_SearchNearBY);
+                break;
+            case R.id.nav_detectCurrentLatLng:
+                this.showFragment(Fragement_CurrentLocation);
                 break;
 
             default:
@@ -192,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 break;
             case Fragment_SearchNearBY:
                 this.showSearchNearByFragment();
+            case Fragement_CurrentLocation:
+                this.showCurrentLocation();
 
 
             default:
@@ -219,6 +225,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             this.SearchNearBy_Fragment = SearchNearBy.newInstance();
         }
         this.startTransactionFragment(this.SearchNearBy_Fragment);
+    }
+
+    private void showCurrentLocation(){
+        if(this.CurrentLocation_Fragemnt == null){
+            /** DtectedLatLng est le nom de la class*/
+            this.CurrentLocation_Fragemnt = DetectLatLng.newInstance();
+        }
+        this.startTransactionFragment(this.CurrentLocation_Fragemnt);
+
     }
 
 

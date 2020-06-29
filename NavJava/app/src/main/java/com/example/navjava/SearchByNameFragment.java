@@ -273,10 +273,6 @@ public class SearchByNameFragment extends Fragment implements OnMapReadyCallback
             locationChangedListener.onLocationChanged(location);
             lat = location.getLatitude();
             lng = location.getLongitude();
-
-
-
-
         }
     }
 

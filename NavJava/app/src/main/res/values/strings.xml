@@ -10,4 +10,5 @@
     <!-- Navigation item -->
     <string name="nav_region">Search by name</string>
     <string name="nav_searchNearBy">Search Near By</string>
+    <string name="nav_currentatLng">CurrentLatLng</string>
 </resources>
