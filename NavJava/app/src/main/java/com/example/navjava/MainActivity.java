@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 this.showFragment(Fragement_Settings);
                 break;
 
+
             default:
                 break;
         }

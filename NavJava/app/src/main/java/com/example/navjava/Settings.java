@@ -1,5 +1,6 @@
 package com.example.navjava;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ public class Settings extends Fragment {
 
     MainActivity mapsActivity;
     private List<String> settings_item = Arrays.asList("item1","item2","itemi","itemn");
+    private List<Integer> Settings_icons = Arrays.asList(R.drawable.minus, R.drawable.location, R.drawable.search2, R.drawable.ic_menu_camera);
     ListView listView;
 
     @Override
@@ -37,6 +40,7 @@ public class Settings extends Fragment {
         ((MainActivity) getActivity()).setActionBarTitle("Settings");
 
         listView = view.findViewById(R.id.listview);
+        /** recuperer les valeurs de la liste de settings ici avant d'appeler l'adapter*/
 
         cusmus cusmus = new cusmus();
         listView.setAdapter(cusmus);
@@ -95,7 +99,9 @@ public class Settings extends Fragment {
 
             view = inflater.inflate(R.layout.simple_list_item, null);
             TextView textView = view.findViewById(R.id.txt);
+            ImageView imageView = view.findViewById(R.id.imageView);
             textView.setText(settings_item.get(position));
+            imageView.setImageDrawable(getResources().getDrawable(Settings_icons.get(position)));
 
             return view;
 

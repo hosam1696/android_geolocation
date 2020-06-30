@@ -56,12 +56,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
         View layout;
         public MyViewHolder(View view){
-            super(view);
-            layout = view;
-            Log.i("TAG","ok");
-            txt = (TextView) view.findViewById(R.id.txt);
-        }
+        super(view);
+        layout = view;
+        Log.i("TAG","ok");
+        txt = (TextView) view.findViewById(R.id.txt);
+
     }
+}
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position){

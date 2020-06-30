@@ -22,7 +22,6 @@ public class TabBarExample extends Fragment {
     }
 
     MainActivity mapsActivity;
-    private List<String> settings_item = Arrays.asList("item1","item2","itemi","itemn");
 
     private TabLayout tab;
     private ViewPager page;
@@ -39,12 +38,16 @@ public class TabBarExample extends Fragment {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter((getChildFragmentManager()));
 
         /** set the fragents*/
-        Fragment1 fragment1 = Fragment1.newInstance();
+        Fragment1 fragment1 = Fragment1.newInstance();//page1
         viewPagerAdapter.addFragment(fragment1,"Fragment1");
 
         Fragment2 fragment2 = Fragment2.newInstance();
         viewPagerAdapter.addFragment(fragment2,"Fragment2");
 
+        Fragment3 fragment3 = Fragment3.newInstance();
+        viewPagerAdapter.addFragment(fragment3,"Fragment3");
+
+        /**static no changes*/
         page.setAdapter(viewPagerAdapter);
         tab.setupWithViewPager(page);
 
