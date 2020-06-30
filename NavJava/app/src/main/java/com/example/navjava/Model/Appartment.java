@@ -7,6 +7,10 @@ public class Appartment {
 
     public Appartment(){}
 
+    public Appartment(String name){
+        this.name = name;
+    }
+
     public Appartment(String lat, String lng, String name, String ref, String vicinity, String type,String price) {
         this.lat = lat;
         this.lng = lng;
