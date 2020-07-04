@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
      * Fragment
      */
     private Fragment SearchByName_Fragment,
-                    SearchNearBy_Fragment,CurrentLocation_Fragemnt;
+                    SearchNearBy_Fragment,CurrentLocation_Fragemnt,settings_Fragemnt;
 
 
 
@@ -64,7 +64,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static final int FRAGMENT_SearchByName = 1,
                             Fragment_SearchNearBY = 2,
-                            Fragement_CurrentLocation = 3;
+                            Fragement_CurrentLocation = 3,
+                            Fragement_Settings = 4;
+
 
 
 
@@ -123,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             case R.id.nav_detectCurrentLatLng:
                 this.showFragment(Fragement_CurrentLocation);
                 break;
+            case R.id.nav_settings:
+                this.showFragment(Fragement_Settings);
+                break;
+
 
             default:
                 break;
@@ -196,9 +202,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 break;
             case Fragment_SearchNearBY:
                 this.showSearchNearByFragment();
+                break;
             case Fragement_CurrentLocation:
                 this.showCurrentLocation();
-
+                break;
+            case Fragement_Settings:
+                this.showSettings();
+                break;
 
             default:
                 break;
@@ -233,6 +243,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             this.CurrentLocation_Fragemnt = DetectLatLng.newInstance();
         }
         this.startTransactionFragment(this.CurrentLocation_Fragemnt);
+
+    }
+
+    private void showSettings(){
+        if(this.settings_Fragemnt == null){
+            this.settings_Fragemnt = Settings.newInstance();
+        }
+        this.startTransactionFragment(this.settings_Fragemnt);
 
     }
 

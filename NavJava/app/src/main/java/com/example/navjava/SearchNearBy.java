@@ -45,7 +45,7 @@ public class SearchNearBy extends Fragment implements OnMapReadyCallback,Locatio
     private ImageView start;
     private double lat = 0,lng = 0;
     private  static final int RADIUS = 10000;
-    private static final String KEY ="AIzaSyDuyIv_d9i89QWqCjGEEuvPdO1X49NPNN0";
+    private static final String KEY ="AIzaSyCduOQmMTrZYWuMAp2g1mxjf1HrJqMaQsE";
     private MainActivity mapsActivity;
     private Button zoomin, zoomout;
 
@@ -273,7 +273,7 @@ public class SearchNearBy extends Fragment implements OnMapReadyCallback,Locatio
         StringBuilder url = new StringBuilder();
         url.append("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         url.append("location=" + lat + "," + lng  + "&radius=" + RADIUS);
-        url.append("&type=university&key=" + KEY);
+        url.append("&type=parking&key=" + KEY);
         return url.toString();
     }
 
