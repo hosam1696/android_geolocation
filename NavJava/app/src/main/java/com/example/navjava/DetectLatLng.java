@@ -26,10 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.navjava.appartment.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -54,7 +56,7 @@ public class DetectLatLng extends Fragment implements OnMapReadyCallback, Locati
         View view = inflater.inflate(R.layout.currentlocation, container, false);
         mapsActivity = (MainActivity) getActivity();
 
-        ((MainActivity) getActivity()).setActionBarTitle("Current location");
+        ((MainActivity) getActivity()).setActionBarTitle("Geolocation Sensor");
         btn = view.findViewById(R.id.button);
         txt = view.findViewById(R.id.txt);
 
@@ -71,6 +73,8 @@ public class DetectLatLng extends Fragment implements OnMapReadyCallback, Locati
                 if ((lat == 0) || (lng == 0)) {
                     Toast.makeText(getActivity(), "wait for gps", Toast.LENGTH_SHORT).show();
                 } else {
+                    float zoomLevel = (float) 15.0;
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoomLevel));
                     txt.setText(lat+","+lng);
                 }
             }
@@ -193,6 +197,8 @@ public class DetectLatLng extends Fragment implements OnMapReadyCallback, Locati
             }
         }
         mMap.setMyLocationEnabled(true);
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom + 0.8f));
+
         mMap.setLocationSource(this);
         SharedPreferences mPrefs = getActivity().getPreferences(getActivity().MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
